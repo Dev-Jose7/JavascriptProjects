@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function(){
         //Evitar que los signos aritmeticos sean escritos en el campo, esto con el fin de no alterar los números
         const simbolos = /[^0-9]/g;
         e.target.value = e.target.value.replace(simbolos, "");
-        console.log(simbolos);
         
         if(teclado == false){//Sirve cuando se usan los dos teclados al tiempo para evitar perdida de datos en las variables
             detectarNumero(id);
@@ -90,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function(){
             let id = e.target.textContent;
             teclado = true;
 
-            if(id == "+" || id == "-" || id == "x" || id == "/" || id == "-" || id == "%" || id == "round" || id == "floor" || id == "ceil"){
+            if(id == "+" || id == "-" || id == "x" || id == "/" || id == "-" || id == "%" || id == "round" || id == "floor" || id == "ceil" || id == "="){
                 signo = id;
                 id = "";
                 operacion = true;
@@ -128,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function(){
                     break;
 
                 case "=":
-                    id = "";
                     break;
 
                 case "⬅":
@@ -251,7 +249,6 @@ document.addEventListener("DOMContentLoaded", function(){
             }else{
                 operacionAritmetica();
             }
-            
         }
     }
 
@@ -278,8 +275,9 @@ document.addEventListener("DOMContentLoaded", function(){
                 elementoVisor.textContent = +numero1.toFixed(3) + " " + signo + " " + elementoEntrada.value;
 
                 if(signo == "="){
-                    elementoVisor.textContent = resultado + elementoEntrada.value;
+                    elementoVisor.textContent = resultado;
                     elementoSalida.value = "";
+                    elementoEntrada.value = "";
                 }
     
                 if(signo == "*"){
