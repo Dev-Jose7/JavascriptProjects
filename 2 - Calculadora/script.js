@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let operacion = false;
     let teclado = false;
     let signo = "";
+    let igual = "";
     
 
     modoOscuro();
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     
     //2 - Registro de eventos
-    document.querySelector("html").addEventListener("click", function(){
+    document.querySelector("body").addEventListener("click", function(){
         elementoEntrada.focus();
     });
     
@@ -88,8 +89,9 @@ document.addEventListener("DOMContentLoaded", function(){
         elementoBoton[i].addEventListener("click", function(e){
             let id = e.target.textContent;
             teclado = true;
+            igual = "";
 
-            if(id == "+" || id == "-" || id == "x" || id == "/" || id == "-" || id == "%" || id == "round" || id == "floor" || id == "ceil" || id == "="){
+            if(id == "+" || id == "-" || id == "x" || id == "/" || id == "-" || id == "%" || id == "round" || id == "floor" || id == "ceil"){
                 signo = id;
                 id = "";
                 operacion = true;
@@ -126,7 +128,11 @@ document.addEventListener("DOMContentLoaded", function(){
                     operacion = true;
                     break;
 
-                case "=":
+                case "=": //Detecta cuando se hace click en el botón = para imprimir solo el resultado y que no se vuelva a imprimir un segundo resultado en la salida sin todavia eligir un signo, solo aplica para teclado virtual
+                    igual = id;
+                    if(signo != "r"){
+                        signo = "";
+                    }
                     break;
 
                 case "⬅":
@@ -274,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function(){
             if(signo != ""){
                 elementoVisor.textContent = +numero1.toFixed(3) + " " + signo + " " + elementoEntrada.value;
 
-                if(signo == "="){
+                if(igual == "=" && signo != "r"){
                     elementoVisor.textContent = resultado;
                     elementoSalida.value = "";
                     elementoEntrada.value = "";
@@ -305,15 +311,15 @@ document.addEventListener("DOMContentLoaded", function(){
                 }
     
                 if(signo == "round"){
-                    elementoVisor.textContent = resultado;
+                    elementoVisor.textContent = numero1;
                 }
     
                 if(signo == "floor"){
-                    elementoVisor.textContent = resultado;
+                    elementoVisor.textContent = numero1;
                 }
     
                 if(signo == "ceil"){
-                    elementoVisor.textContent = resultado;
+                    elementoVisor.textContent = numero1;
                 }
             }
             
