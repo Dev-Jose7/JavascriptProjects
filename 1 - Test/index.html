@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <title>Test</title>
+</head>
+<body>
+    <main>
+        <div class="cuadro" id="cuadro1">
+            <div>
+                <h1>Responde las siguientes preguntas antes de que se acabe el tiempo</h1>
+
+                <p>Haz click en el siguiente botón para comenzar el juego</p>
+            </div>
+            
+            <button onclick="iniciarJuego()" class="boton">Iniciar juego</button>
+        </div>
+
+        <div class="cuadro" id="cuadro2">
+            <h2><span id="leyenda">Una vez las respondas haz click en el boton "Terminar" </span><span class="cuadro__contador" id="tiempo">30</span></h2>
+
+            <audio id="audio">
+                <source src="audio/alarma.mp3" type="audio/mpeg">
+            </audio>
+
+            <div class="cuadro__preguntas">
+                <div class="preguntas">
+                    <label>¿Cuál es la capital de Francia?</label>
+                    <input type="text" id="pregunta1">
+                </div>
+        
+                <div class="preguntas">
+                    <label>(7*5) + 15</label>
+                    <input type="text" id="pregunta2">
+                </div>
+        
+                <div class="preguntas">
+                    <label>¿Cuál es el simbolo quimico del agua?</label>
+                    <input type="text" id="pregunta3">
+                </div>
+        
+                <div class="preguntas">
+                    <label>¿Cual es el año en el que se descubrió America?</label>
+                    <input type="text" id="pregunta4">
+                </div>
+        
+                <div class="preguntas">
+                    <label>¿Cuantos departamentos tiene Colombia?</label>
+                    <input type="text" id="pregunta5">
+                </div>
+            </div>
+            
+            <button class="boton" onclick="terminarJuego()" >Terminar</button>
+        </div>
+
+        <div class="cuadro" id="cuadro3">
+            <div class="titulo__cuadro">
+                <h2>Resultados</h2>
+                <p class="mensaje" id="mensaje"></p>
+                <h3>Terminado el:  <span id="fecha"></span></h3>
+            </div>
+
+            <div class="detalles">
+                <div class="respuestas">
+                    <h3>1 - <span id="respuesta1"></span></h3>
+                    <h3>2 - <span id="respuesta2"></span></h3>
+                    <h3>3 - <span id="respuesta3"></span></h3>
+                    <h3>4 - <span id="respuesta4"></span></h3>
+                    <h3>5 - <span id="respuesta5"></span></h3>
+                </div>
+
+                <div class="puntuacion">
+                    <h3>Puntuación</h3>
+                    <h3><span id="marcador">0</span>/<span>5</span></h3>
+                </div>
+            </div>
+            
+            <button class="boton" onclick="reiniciarJuego()" >Jugar otra vez</button>
+        </div>
+    </main>
+
+    <script>
+        const elementoInicio = document.getElementById("cuadro1");
+        const elementoJuego = document.getElementById("cuadro2");
+        const elementoResultado = document.getElementById("cuadro3");
+        const elementoTiempo = document.getElementById("tiempo");
+        const elementoMensaje = document.getElementById("mensaje");
+        const elementoLeyenda = document.getElementById("leyenda");
+        const elementoAudio = document.getElementById("audio");
+        const elementoPuntaje = document.getElementById("marcador");
+        let contador;
+
+        const elementoPregunta1 = document.getElementById("pregunta1");
+        const elementoPregunta2 = document.getElementById("pregunta2");
+        const elementoPregunta3 = document.getElementById("pregunta3");
+        const elementoPregunta4 = document.getElementById("pregunta4");
+        const elementoPregunta5 = document.getElementById("pregunta5");
+
+        function iniciarJuego(){
+            elementoInicio.style.display = "none";
+            elementoJuego.style.display = "flex";
+
+            contador = setInterval(function(){
+                elementoTiempo.textContent = elementoTiempo.textContent - 1;
+
+                if(elementoTiempo.textContent == 0){
+                    clearInterval(contador);
+                    elementoMensaje.textContent = "Has perdido, no respondiste a tiempo"
+                    elementoAudio.play();
+                    elementoJuego.style.display = "none";
+                    elementoResultado.style.display = "flex";
+                    terminarJuego();
+                }
+            }, 1000);
+        }
+
+        //Valida si es posible terminar el juego o no y valida preguntas correctas
+        function terminarJuego(){
+            const elementoRespuesta1 = document.getElementById("respuesta1");
+            const elementoRespuesta2 = document.getElementById("respuesta2");
+            const elementoRespuesta3 = document.getElementById("respuesta3");
+            const elementoRespuesta4 = document.getElementById("respuesta4");
+            const elementoRespuesta5 = document.getElementById("respuesta5");
+
+            const date = new Date();
+            const elementoFecha = document.getElementById("fecha");
+
+            let puntos = 0;
+            
+            //Valida si las preguntas han sido respondidas para comprobar si el usuario puede terminar o no
+            if(elementoTiempo != 0){
+                if(elementoPregunta1.value == "" || elementoPregunta2.value == "" || elementoPregunta3.value == "" || elementoPregunta4.value == "" || elementoPregunta5.value == ""){
+                    elementoLeyenda.textContent = "Debes de responder todas las preguntas ";
+                    elementoLeyenda.style.color = "red";
+                    setTimeout(() => {
+                        elementoLeyenda.textContent = "Una vez las respondas haz click en el boton 'Terminar' ";
+                        elementoLeyenda.style.color = "#000";
+                    }, 3000);
+                }else{
+                    elementoJuego.style.display = "none";
+                    elementoResultado.style.display = "flex";
+                    clearInterval(contador);
+                }
+            }
+
+            //Plantilla con los resultados y sumador de puntaje
+            fecha.textContent = date.toLocaleDateString("es-ES");
+
+            if(elementoPregunta1.value == ""){
+                elementoRespuesta1.textContent = "No respondida";
+            }else{
+                if(elementoPregunta1.value == "Paris" || elementoPregunta1.value == "paris" || elementoPregunta1.value == "PARIS" || elementoPregunta1.value == "pARIS"){
+                    elementoRespuesta1.textContent = elementoPregunta1.value;
+                    puntos++;
+                }else{
+                    elementoRespuesta1.textContent = elementoPregunta1.value;
+                    elementoRespuesta1.style.color = "red";
+                }
+                
+            }
+
+            if(elementoPregunta2.value == ""){
+                elementoRespuesta2.textContent = "No respondida";
+            }else{
+                if(elementoPregunta2.value == 50){
+                    elementoRespuesta2.textContent = elementoPregunta2.value;
+                    puntos++;
+                }else{
+                    elementoRespuesta2.textContent = elementoPregunta2.value;
+                    elementoRespuesta2.style.color = "red";
+                }
+            }
+
+            if(elementoPregunta3.value == ""){
+                elementoRespuesta3.textContent = "No respondida";
+            }else{
+                if(elementoPregunta3.value == "H2O" || elementoPregunta3.value == "H2o" || elementoPregunta3.value == "h2o" || elementoPregunta3.value == "h2O"){
+                    elementoRespuesta3.textContent = elementoPregunta3.value;
+                    puntos++;
+                }else{
+                    elementoRespuesta3.textContent = elementoPregunta3.value;
+                    elementoRespuesta3.style.color = "red";
+                } 
+            }
+
+            if(elementoPregunta4.value == ""){
+                elementoRespuesta4.textContent = "No respondida";
+            }else{
+                if(elementoPregunta4.value == 1492) {
+                    elementoRespuesta4.textContent = elementoPregunta4.value;
+                    puntos++;
+                }else{
+                    elementoRespuesta4.textContent = elementoPregunta4.value;
+                    elementoRespuesta4.style.color = "red";
+                }
+                
+            }
+
+            if(elementoPregunta5.value == ""){
+                elementoRespuesta5.textContent = "No respondida"
+            }else{
+                if(elementoPregunta5.value == 32){
+                    elementoRespuesta5.textContent = elementoPregunta5.value;
+                    puntos++;
+                }else{
+                    elementoRespuesta5.textContent = elementoPregunta5.value;
+                    elementoRespuesta5.style.color = "red";
+                }
+            }
+
+            if(puntos>=3) {
+                elementoMensaje.textContent = "Felicidades, ¡Ganaste!";
+            }else{
+                elementoMensaje.textContent = "Has perdido, inténtalo otra vez"
+            }
+
+            elementoPuntaje.textContent = puntos;
+        }
+
+        function reiniciarJuego(){
+            location.reload();
+        }
+        
+    </script>
+</body>
+</html>

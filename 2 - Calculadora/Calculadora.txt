@@ -1,0 +1,65 @@
+funcionamiento calculadora
+Esta calculadora solo cuenta con un campo de entrada (input) al ser así es necesario indicar las instrucciones necesarias para dectectar los numeros para llevar a cabo las operaciones, que signo aritmetico seleccionó el usuario para que la calculadora pueda realizar dicha operación, imprimir el resultado de la operación y como hacerlo de acuerdo al signo aritmetico y permitir al usuario realizar una siguiente operación con el último resultado obtenido.
+
+1)Para detectar los números, primero se establece un evento keyboard de tipo keydown, esto con el objetivo de identificar que letras del teclado esta utilizando el usuario y así determinar valores y signos númericos.
+2)En la función callback del evento se declara un parametro el cuál contendra la interfaz (objeto) del evento y así utilizar métodos o propiedades de este evento, en concreto se usará la propiedad key, esta propiedad indica que letra presiono el usuario
+1) Se detecta el signo para identificar si se necesita un solo número o se necesitan dos números
+2) Cuando el usuario desea obtener el resultado de su operación se invoca la función de acuerdo al signo detectado, estas procesarán el calculo y lo retornarán para posteriormente imprimirlo en un campo de salida
+3) Al solo contar un campo de entrada, esta no puede incluir los signos en el valor del input debido a que afectarián los valores que contendrán las variables numero 1 y numero 2 (ya que estas solo pueden recibir valores números más no de texto), es por ello que cuando el usuario indique el signo aritmetico a utilizar este se almacenará en una variable para así poder detectar el signo e inmediatamente se invocará una función para borrar el valor del campo de entrada de la calculadora formatearCampo()
+
+1) Se declaran 12 variables, estas son:
+-5 variables para capturar elementos del DOM: 
+elementoEntrada - elementoSalida - elementoVisor - elementoBoton - elementoDecimal
+-3 variables para almacenar numeros:
+numero1 - numero2 - resultado
+-3 variables centineles
+operacion - teclado - terminar
+-1 variable para almacenar caracteres 
+signo
+
+2) Se registran eventos a algunos de los elementos del DOM capturados y otros sin capturar en variables.
+-Evento de tipo click al documento html para que cuando este evento ocurra en el elemento html se realice un enfoque al input principal de la calculadora (elementoEntrada).
+-Evento de tipo keydown al campo de entrada (elementoEntrada) para que cuando ocurra este evento en el elemento input se pueda detectar que tecla presiona el usuario al momento de indicar los valores a calcular.
+-Evento de tipo input para el campo de entrada esto con el fin de que cuando ocurra el evento en este elemento input se pueda identificar que valor ingreso el usuario a este campo de entrada
+-Evento de tipo click a los elementos que contenga la clase botón, al ser varios elementos estos se almacenarán en un arreglo por que varios cuenta con la misma clase y para registrar el evento a cada uno de ellos se establece un ciclo y a dentro de este contendra el metodo para registrar los eventos a los elementos que se encuentren en los indice del arreglo. Esto es posible ya que el indice del ciclo esta alineado al indice del arreglo (0 = 0)
+-Evento de tipo click al boton decimal (.) para que cuando se haga click en este elemento el boton se deshabilite impidiendo volver a usarlo. Esto con el fín de no alterar los números que se vayan capturando en las variables
+
+3) Se declaran funciones para realizar los respectivos calculos y procesar datos
+-detectarNumeros: Esta función detectará los dos números y el signo a operar
+-imprimirVisor: Esta función tiene como objetivo imprimir los valores del campo de entrada (numeros y signo) en un elemento (elementoVisor), esto es lo que verá el usuario ya que el campo de entrada no se encuentra visible, solo recibe datos y elementoVisor muestra estos datos de una forma más completa
+-tecladoFisico y tecladoVirtual: Estas funciones se encuentran adentro de imprimirVisor y se ejecután si el usuario esta utilizando uno de los dos teclados para indicacar los datos al input y de esta forma imprimir en el visor cada tecla que esta indicando el usuario con estos teclados
+-operacionAritmetica: Esta función valida el signo eligido por el usuario para invocar a la función correspondiente del signo y así poder calcular los dos valores (numero1, numero2)
+-formatearCampo: Limpia el campo de entrada (elementoEntrada) y el campo de salida (elementoSalida)
+-imprimirResultado: Se imprime el resultado obtenido de la función operaciónAritmetica en un segundo campo destino para imprimir los resultados (imprimirSalida)
+-sumar, restar, multiplicar, dividir, absoluto, potencia, raiz, porcentaje, random, round, floor y ceil: Estas funciones realizan los calculos especificos de acuerdo a la operación elegida por el usuario
+-modoOscuro: Esta función activa un modo oscuro activandosé a partir de las 10 pm y 6 am hora del dispositivo.	
+
+4) Pasos del algoritmo
+La calculadora cuenta con dos formas para indicar los valores, con teclado fisico (teclado) y con teclado virtual (teclado que se encuentra en pantalla), de acuerdo a cual teclado se esta usando, este funcionará con sus propias funciones pero todas se ejecutan seguiendo una estructura en común:
+
+1) - Teclado físico: Si el usuario usa el teclado físico para indicar los números en el campo de entrada estará ocurriendo un evento de tipo keydown, el cuál se refiere a un evento que ocurre cada que se oprime una tecla del teclado, El algoritmo empezará ejecutándose en la función controladora del evento del elemento en donde se ha registrado este evento, en este caso, en el campo de entrada (elementoEntrada).
+- Teclado virtual: Si el usuario usa el teclado virtual para indicar los números en el campo de entrada estará ocurriendo un evento de tipo click, el cuál se refiere a un evento que ocurre cada que se hace click en un elemento en especifico, esta función almacera en una variable el textContent (id) del boton para así obtener el dato exacto del boton, se detectará el signo para posteriormente validarlo en detectarNumero a partir de acá el valor de operación es true, después se procede a cambiar algunos valores de la variable id para que imprima información correcta de los botones, posteriormente se invoca detectarNumero e imprimirVisor pasandoles como paramentros el id, también se invoca operacionAritmetica para realizar los calculos en tiempo real
+
+2) - Se invoca la función de operaciónAritmetica desde esta función controladora del evento esto permite detectar el signo a eligir por el usuario para seguidamente guardar el valor del resultado en el primer numero y dar continuadad con el resultado más reciente en la siguiente operación
+- Evita calcular mal el resultado cuando el usuario desea cambiar de signo por equivocación, para que funcione debe de eliminar todo el segundo número o sino se realizará un calculo acumulado usando el resultado más reciente como primer numero, a partir de este momento la variable operacion pasa a tener un valor "true", ya que esta variable centinela determina si ya se realizo una operación y así tomar decisiones más adelante de acuerdo a este estado
+- Para que todo lo anterior sea posible primero se debe de identificar los numeros y el signo, es por ello que se invoca la función de detectarNumeros, pasando como argumento una variable que contiene el objeto del evento más la propiedad "key" la cuál sirve para saber con exactitud el caracter de la tecla presionada por el usuario.
+
+3) - Mientras el usuario vaya utilizando uno o los dos teclados otra función controladora de eventos tambien se va ejecutando, elementoEntrada contiene también una función de tipo input la cuál ocurre cuando un input va recibiendo datos en tiempo real, esta función tiene como objetivo filtrar los signos que el usuario vaya utilizando ya que si no se filtran estos quedarán en alguno de las variables de los signos alterando su valor, permitir indicar datos usando los dos teclados al tiempo evitando perdidas de datos, esta función invoca  a la función operaciónAritmetica con el fin de realizar calculos en tiempo real y también evita posibles errores al momento de modificar los numeros, por último invoca a la función imprimirVisor esto con el fín de ir imprimiendo los numeros en tiempo real, para ello pasa como argumento el valor de la variable que contiene el objeto del evento con la propiedes target y value.
+
+4) - En detectarNumero de acuerdo al tipo de entrada se realizará instrucciones diferentes, en este caso para teclado físico se detectará el primer número si no se ha detectado un signo, todo número que ingrese sin todavía tener un signo seleccionado sera guardado en número1
+-Si el argumento que le entrego la función controladora a detectarNumero es igual a cualquiera de los signos que estan disponibles en la calculadora, este argumento se guardará en la variable signo y una vez detectado el signo se ejecutará la función formatearCampo para que elimine los números indicados para numero1 y que no se unan con los valores de la variable numero2, también si operacion es true la variable numero1 tendrá el valor de la variable resultado, variable en donde se guardará el resultado de las operaciones y procederá a invocar nuevamente operacionAritmetica.
+-Si el signo elegido por el usuario es igual a algunos de los operadores que necesitan un segundo número, como suma, resta, multiplicación, división, porcentaje, potencia o random y no se este eligiendo el signo igual =, todo valor a partir de aqui se almacenará en la variable numero2, cabe resaltar que cada que se vaya ingresando valores en estas dos variables, operacion será false ya que esto permitirá no alterar el valor de numero1 con resultado ya que esto solo ocurre cuando el usuario digite un carácter igual a los signos disponibles en la calculadora.
+- Independientemente de cuál sea la entrada por el usuario, si el argumento que entregue las funciones calculadora de las entradas es igual a "Enter" en el caso de teclado físico o "=" en el caso de teclado virtual y a su vez los signos sean diferentes de "r" random o "a" valor absoluto numero1 tendrá el valor del resultado y se formateará el campo, si esta ultima condición no se cumple se invocará operacionAritmetica para una siguiente operación.
+
+5) - En imprimirVisor de acuerdo al tipo de entrada elegida por el usuario, se invocará una segunda función la cuál tiene como objetivo imprimir de forma correcta los valores capturados por estas entradas en las variables numero1, numero2 y signo, también detectará el botón del teclado virtual ⬅ para poder borrar los valores en el input.
+
+6) - En operaciónAritmetica se obtendrá el valor que retonará las funciones propias de las operaciones disponibles de las calculadoras, para ello la variable resultado invocará a una de estas funciones entregandoles como parametros el numero1 y numero2 en aquellas que necesiten de dos números o solo el numero1 en aquellas operaciones que solo necesiten un solo número, despues se invocará la función imprimirResultado entregando como argumento a la variable resultado.
+- En algunas operaciones el numero2 comenzará en cero y como se calcula en tiempo real esto puede generar problemas de calculo como en la multiplicación y división en donde multiplicar o dividir por cero entrega 0 o infinito, entonces para estos casos se altera el numero2 con 1 para entregue un resultado por el mismo número.
+
+7) En formatear campo, el valor del elementoEntrada será vacio para borrar todo número ingresado, si la variable terminar es igual a true esta borrará el valor del elementoSalida y si el argumento que reciba esta variable es igual a true, entonces todas la variables se inicializan en cero o en false. Esto ocurre cuando el usuario digita "C" o hace click en "C", este boton formatea la calculadora
+
+8) En imprimirResultado el valor de elementoSalida será el argumento que se le indicará a la función cuando se invoque (resultado)
+
+9) Las proximas funciones se encargan de realizar el calculo para retornar el valor de estas cuando se les invoquen, cuentan con uno o dos parametros de acuerdo a la operación a realizar.
+
+10) En modoOscuro se cambiará los colores de fondo de la calculadora por colores oscuros con el fin de mejorar la visibilidad de la app por la noche, para ello cambiará los colores cuando sean las 10 pm hasta las 6 am hora del dispositivo, despues de ahí los colores serán restablecidos por los originales, para ello se hacen uso de la clase Date, se instancia esta clase con el fín de acceder al metodo hours y así poder detectar la hora del usuario.

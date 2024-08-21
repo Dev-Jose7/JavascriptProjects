@@ -1,0 +1,275 @@
+// const elementoNumero = document.getElementById("numero");
+        // let numero1 = 0;
+        // let numero2 = 0;
+        // let simbolo = "";
+
+        // function selectOperacion(e){
+        //     if(simbolo == "" && e.key != ""){
+        //         numero1 = elementoNumero.value;
+        //         console.log("n1: " + numero1);
+        //     }
+            
+        //     if(simbolo == "+" || simbolo == "-" || simbolo == "*" || simbolo == "/"){
+        //         if(e.key != ""){
+        //             numero2 = elementoNumero.value;
+        //             console.log("n2: " + numero2);
+        //         }
+        //     }
+
+        //     if(e.key == "+" || e.key == "-" || e.key == "*" || e.key == "/"){
+        //         simbolo = e.key;
+        //         formatearCampo();
+        //     }
+
+        //     elementoNumero.oninput = function(e){
+        //         const simbolosNoPermitidos = /[\+\-\*\/]/g;
+        //         e.target.value = e.target.value.replace(simbolosNoPermitidos, "");
+        //         console.log(e);
+        //     }
+
+            
+
+        //     console.log(elementoNumero.value == "+");
+        // }
+
+        // // function selectOperacion(e){
+        // //     if(elementoNumero.value == ""){
+        // //         numero1 = e.key;
+        // //         console.log("n1: " + numero1);
+        // //     }
+
+        // //     if(elementoNumero.value == "+"){
+        // //         numero2 = e.key;
+        // //         console.log("n2: " + numero2);
+        // //     }
+
+        // //     if(e.key == "+"){
+        // //         formatearCampo();
+        // //     }
+
+        // //     console.log(elementoNumero.value == "+");
+        // // }
+
+        // function formatearCampo(){
+        //     elementoNumero.value = "";
+        //     // if(elementoNumero.value >= 0){
+        //     //     // console.log(elementoNumero.value);
+        //     //     let numero = +elementoNumero.value;
+        //     //     elementoNumero.value = "";
+        //     //     console.log(elementoNumero.value >= 0);
+        //     //     return numero;
+        //     // }
+        //     // console.log(elementoNumero.value);
+        // }
+
+        // function sumar(x, y){
+            
+        //     console.log("sumar()" + (x + y));
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="generarRandom(10, 15)">Generar número aleatorio</button>
+    <h1>Numero aleatorio: <span id="numero">---</span></h1>
+
+    <input type="text" id="entrada">
+    <button>0</button>
+    <button>1</button>
+
+    <script>
+        function generarRandom(min, max){
+            maximo = maximo + 1; //Se realiza debido a que Math.random() va hasta el numero indicado menos uno
+            const elementoNumero = document.getElementById("numero");
+            let random = Math.floor(Math.random() * (max - min) + min);
+
+            elementoNumero.textContent = random;
+        }
+
+        const entrada = document.getElementById("entrada");
+        const boton = document.querySelectorAll("button");
+        let numero = 0;
+
+        entrada.addEventListener("input", function(e){
+            digitos(e, {});
+        });
+
+        for (let i = 0; i < boton.length; i++) {
+            boton[i].addEventListener("click", function(e){
+                imprimirDigitos(e, {});
+            });
+            
+        }
+
+        function digitos(e, obj) {
+            console.log(entrada.value);
+        }
+
+
+        function imprimirDigitos(e, obj) {
+            numero = e.target.textContent;
+
+            console.log(numero);
+        }
+
+    </script>
+</body>
+</html> 
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teclado Virtual</title>
+    <style>
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 300px;
+            margin: 20px;
+        }
+
+        .key {
+            padding: 10px;
+            margin: 5px;
+            background-color: lightgray;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            flex: 1 0 30%; /* Toma un ancho del 30% */
+            text-align: center;
+            user-select: none; /* Evita la selección de texto */
+        }
+
+        .key:hover {
+            background-color: gray;
+            color: white;
+        }
+
+        .input-field {
+            margin: 20px;
+            padding: 10px;
+            width: calc(100% - 40px); /* Ajustar ancho */
+            max-width: 300px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <input type="number" class="input-field" id="inputField" placeholder="Escribe aquí...">
+    
+    <div class="keyboard" id="keyboard">
+        Botones del teclado
+        <div class="key">1</div>
+        <div class="key">2</div>
+        <div class="key">3</div>
+        <div class="key">4</div>
+        <div class="key">5</div>
+        <div class="key">6</div>
+        <div class="key">7</div>
+        <div class="key">8</div>
+        <div class="key">9</div>
+        <div class="key">0</div>
+        <div class="key">A</div>
+        <div class="key">B</div>
+        <div class="key">C</div>
+     Puedes agregar más teclas según sea necesario
+    </div>
+
+    <script>
+        const inputField = document.getElementById('inputField');
+        const keyboard = document.getElementById('keyboard');
+
+        // Agregar event listener a cada tecla
+        keyboard.addEventListener('click', (event) => {
+            if (event.target.classList.contains('key')) {
+                const keyText = event.target.textContent;
+                inputField.value += keyText;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+-->
+
+
+
+
+
+if(teclado == true){ //TECLADO VIRTUAL
+    if(signo == ""){ //Primer operación
+        elementoEntrada.value += e;
+        numero1 = +elementoEntrada.value;
+        console.log("n1: " + numero1 + " teclado virtual");
+    }
+
+    //Se detecta el signo a utilizar para seguidamente limpiar el campo y así poder escribir el segundo número
+    if(signo == "+" || signo == "-" || signo == "x" || signo == "/" || signo == "%" || signo == "a" || signo == "p" || signo == "s" || signo == "r" || signo == "round" || signo == "floor" || signo == "ceil" || signo == "="){
+        if(numero2 == 0){
+            formatearCampo();
+            elementoDecimal.disabled = false;
+
+            if(signo == "x"){
+                signo = "*";
+            }
+            console.log("campo formateado");
+        }
+        
+    }
+
+    if(signo != "" && e != "="){
+        elementoEntrada.value += e;
+        numero2 = +elementoEntrada.value;
+        console.log("n2: " + numero2 + " teclado virtual");
+    }
+    
+    
+}
+
+if(teclado == false){ //TECLADO FÍSICO
+    if(signo == ""){
+        numero1 = +elementoEntrada.value;
+        console.log("n1: " + numero1 + " por teclado");
+    }
+
+    //Se detecta el signo a utilizar para seguidamente limpiar el campo y así poder escribir el segundo número
+    if(e == "+" || e == "-" || e == "*" || e == "/" || e == "%" || e == "a" || e == "p" || e == "s" || e == "r" || e == "round" || e == "floor" || e == "ceil" || e == "="){
+        signo = e;
+        if(signo != ""){
+            formatearCampo();
+            console.log("campo formateado");
+        }
+    }
+
+    if(signo == "+" || signo == "-" || signo == "*" || signo == "/" || signo == "%" || signo == "p" || signo == "r"){
+        if(signo != "" && e != "="){
+            numero2 = +elementoEntrada.value;
+            console.log("n2: " + numero2 + " teclado fisico");
+        }
+    }
+}

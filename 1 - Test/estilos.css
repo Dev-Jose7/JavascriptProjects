@@ -1,0 +1,118 @@
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+    height: 100vh;
+    background: rgb(24,118,226);
+    background: linear-gradient(160deg, rgb(9, 114, 233) 30%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+main{
+    margin: 0 auto;
+}
+
+h1{
+    margin-bottom: 1.5vw;
+}
+
+h2{
+    font-size: 1.35rem;
+}
+
+p{
+    font-size: 1.35rem;
+}
+
+.cuadro{
+    width: 70vh;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5vh;
+    background-color: #FFFFFF;
+    font-size: 1.2rem;
+    box-shadow: 5px 5px 3px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 2rem;
+}
+
+.cuadro:nth-child(2),
+.cuadro:nth-child(3){
+    display: none;
+}
+
+.cuadro__contador{
+    color: red;
+}
+
+.preguntas{
+    display: flex;
+    justify-content: space-between;
+}
+
+.preguntas input{
+    margin-bottom: 1vw;
+}
+
+.preguntas:last-child input{
+    margin: 0;
+}
+
+.boton{
+    color: #FFF;
+    background-color: #000;
+    border-style: none;
+    padding: 0.7vw;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.titulo__cuadro{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.titulo__cuadro h2{
+    flex: 0 0 100%;
+}
+
+.mensaje{
+    margin: 0.5vw 0;
+}
+
+.detalles{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.respuestas{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.respuestas h3{
+    margin-bottom: 1vw;
+}
+
+.puntuacion{
+    flex: 0 0 30%;
+    text-align: center;
+    font-size: 1.5rem;
+}
